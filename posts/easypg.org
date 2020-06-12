@@ -1,0 +1,102 @@
+#+title: Encryption with EasyPG & Emacs
+#+date: <2012-11-22 Thu>
+#+keywords: emacs, easypg, gpg, encryption, security
+#+setupfile: ../org-templates/post.org
+
+Emacs comes with a package called [[http://www.gnu.org/software/emacs/manual/html_mono/epa.html][EasyPG]]. It provides an interface for [[http://www.gnupg.org][GnuPG]]
+based operations in Emacs. It can operate on regions as well as files, and it
+integrates with /dired/ and /mail-mode/ seamlessly.
+
+EasyPG is enabled by default. Commands such as =find-file= and =save-buffer= on
+any =*.gpg= file will be dealt with by EasyPG automatically. You can customise
+this behaviour by modifying the =epa-file-name-regexp= variable to any pattern
+you wish. It is Emacs after all.
+
+GnuPG is GNU's implementation of [[http://en.wikipedia.org/wiki/Pretty_Good_Privacy#OpenPGP][OpenPGP]] standard. In the post [[file:gnupg.org][Data encryption
+with GnuPG]], I covered how to use GnuPG in detail. Make sure to check it out if
+you are not familiar with the tool.
+
+EasyPG commands all start with =epa-=, most of them are pretty
+self-explanatory. E.g. =epa-encrypt-region= encrypts a marked region in the
+current buffer.
+
+EasyPG uses [[http://en.wikipedia.org/wiki/Symmetric-key_algorithm][symmetric encryption]] by default, which will ask you to set a
+password when a new =.gpg= file is saved.  The encrypted file can then be
+decrypted using the same password. If you prefer [[http://en.wikipedia.org/wiki/Public-key_cryptography][public-key encryption]] with
+added security, instead just save file with =C-x C-s=, you can use
+=epa-file-select-key= to get a list of keys in your system and select the
+recipient's public key for encryption.
+
+** Real world usage examples
+   Sensitive information such as usernames and passwords for online logins,
+   software licence keys and financial figures should be kept secret. They
+   should be stored with a disaster recovery storage strategy in case of data
+   corruption or hardware failure. One accessible method would be putting them
+   in a plain text file, encrypting the file and then throwing it in Dropbox or
+   a git repository, and then you can forget about it.
+
+*** Online logins
+    [[http://orgmode.org/][Org-mode]] is unbeatable for organising notes and simple tabular data in plain
+    text files. 
+    #+attr_html: :class center no-border
+    #+caption: Org-mode Table
+    [[http://media.liwen.name/images/lz-20170321-org-password-table.png]]
+
+    Saving the file as =passwords.org.gpg=, depending on your EasyPG settings,
+    you will be asked to either set up a password for the file or select the
+    recipient's public key for encryption. In this use case you should be the
+    sole 'recipient' of the encrypted message - why would you want to share all
+    your passwords with anyone else?
+
+    Try to open the file with Emacs, you will be asked to type in the password:
+    #+attr_html: :class center no-border
+    [[http://media.liwen.name/images/lz-20170321-org-password-table-open.png]]
+
+    *Tips:* make sure you choose a strong password ONLY for encrypting the
+    password list, and don't use it anywhere else. If you prefer public-key
+    encryption, use strong and unique passwords for each private key as well.
+
+*** Sharing notes
+    With =epa-encrypt-region= you can encrypt sensitive sections of a file and
+    share the rest of the document with others. E.g. sharing your notes on how
+    to setup a computer but not the license keys of applications.
+
+    Imagine you need to share the below project plan with a colleague.
+    [[http://media.liwen.name/images/lz-20170321-easyPG-usage-01.png]]
+
+    You probably don't want to share the serial numbers and the credit card
+    details. Select the regions you don't want to share and issue =M-x
+    epa-encrypt-region=, type your password, you would end up with a file like this:
+    #+attr_html: :class center no-border
+    [[http://media.liwen.name/images/lz-20170321-easyPG-usage-02.png]]
+
+    Toggle the outline mode, it still looks nice and clean.
+    #+attr_html: :class center no-border
+    [[http://media.liwen.name/images/lz-20170321-easyPG-usage-03.png]]
+
+    It's always a good practice to encrypt sensitive info even you are the only
+    one who will ever read it, otherwise it can easily lead to embarrassment,
+    identity fraud or more devastating disasters if your computer is
+    compromised.
+
+    To decrypt the encrypted parts, just select the PGP messages and issue =M-x
+    epa-decrypt-region=
+
+    Having to type the password in every time when you open a file can quickly
+    get tedious. Fortunately GnuPG provides an utility called =gpg-agent= which
+    can cache passwords for a pre-defined period of time. EasyPG can remember
+    your password for symmetric encryption.
+
+    Credentials caching can get complicated depending on which version of GnuPG
+    you have in your system and the encryption methods your employ. It's best to
+    consult relevant documentation for detailed instructions.
+
+** Update <2017-03-21>
+   To use Emacs 25+ with GnuPG 2.1.x and above, set the below in your Emacs init file:
+   #+begin_src emacs-lisp
+     (setq epg-gpg-program "gpg2")
+     (setf epa-pinentry-mode 'loopback)
+   #+end_src
+
+   The added bonus is now that Emacs will cache the password for a short period of
+   time automatically without a GUI [[https://gnupg.org/software/pinentry/index.html][pinentry]].

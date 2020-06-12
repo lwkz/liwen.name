@@ -51,9 +51,6 @@ body h3 {
   margin-top: 40px;
   font-weight: bold;
 }
-body p {
-  text-align: justify;
-}
 body a {
   text-decoration: none;
   color: #1692cc;
@@ -156,6 +153,11 @@ body #postamble {
   padding: 15px 0;
   border-top: 1px solid #e2e2e2;
 }
+
+.footer p {
+  text-align: center;
+}
+
 body #postamble a {
   color: #e9a390;
 }

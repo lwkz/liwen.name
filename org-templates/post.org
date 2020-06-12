@@ -1,4 +1,4 @@
-#+AUTHOR: John Doe
-#+KEYWORDS: post
-#+OPTIONS: toc:nil
-#+HTML_DOCTYPE: xhtml-strict
+#+author: Liwen Knight-Zhang
+#+keywords: post
+#+options: toc:nil html5-fancy:t
+#+html_doctype: xhtml5

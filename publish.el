@@ -56,14 +56,13 @@
   ;; keyword
   (when (string-match-p "post" (format "%s" (plist-get plist :keywords)))
     (plist-put plist
-	       :subtitle (format "Published on %s by %s."
-				 (org-export-get-date plist psachin-date-format)
-				 (car (plist-get plist :author)))))
+	       :subtitle (format "Published on %s"
+				 (org-export-get-date plist psachin-date-format))))
 
   ;; Below content will be added anyways
 "<div class='intro'>
-<img src='/images/about/profile.png' alt='John Doe' class='no-border'/>
-<h1>John Doe</h1>
+<img src='/images/about/profile.png' alt='Liwen Knight-Zhang' class='no-border'/>
+<h1>Liwen Knight-Zhang</h1>
 <p>Emacser</p>
 </div>
 
@@ -79,9 +78,9 @@
 
 (defvar psachin-website-html-postamble
   "<div class='footer'>
-Copyright © 2020 <a href='mailto:john.doe@example.com'>John Doe</a><br>
-Adapted from <a href='https://nicolas.petton.fr'>https://nicolas.petton.fr</a> <br>
-Last updated on %C using %c
+    <p>Copyright © 2011-2020 Liwen Knight-Zhang</p>
+    <p>Adapted from <a href='https://nicolas.petton.fr'>https://nicolas.petton.fr</a></p>
+    <p>Last updated on %C using %c</p>
 </div>")
 
 (defvar site-attachments
@@ -98,10 +97,9 @@ STYLE:
 PROJECT: `posts in this case."
   (cond ((not (directory-name-p entry))
          (format "*[[file:%s][%s]]*
-                 #+HTML: <p class='pubdate'>by %s on %s.</p>"
+                 #+HTML: <p class='pubdate'>On %s.</p>"
                  entry
                  (org-publish-find-title entry project)
-                 (car (org-publish-find-property entry :author project))
                  (format-time-string psachin-date-format
                                      (org-publish-find-date entry project))))
         ((eq style 'tree) (file-name-nondirectory (directory-file-name entry)))
@@ -112,7 +110,7 @@ PROJECT: `posts in this case."
   "Publish an org file to reveal.js HTML Presentation.
 FILENAME is the filename of the Org file to be published.  PLIST
 is the property list for the given project.  PUB-DIR is the
-publishing directory. Returns output file name."
+publishing directory.  Returns output file name."
   (let ((org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/"))
     (org-publish-org-to 'reveal filename ".html" plist pub-dir)))
 
