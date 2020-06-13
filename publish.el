@@ -17,9 +17,6 @@
 
 (require 'org)
 (require 'ox-publish)
-;; (require 'htmlize)
-;; (require 'ox-html)
-;; (require 'ox-rss)
 (require 'ox-reveal)
 
 ;; setting to nil, avoids "Author: x" at the bottom
@@ -45,9 +42,9 @@
 (defvar psachin-website-html-head
   "<link rel='icon' type='image/x-icon' href='/images/favicon.ico'/>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
-<link rel='stylesheet' href='https://code.cdn.mozilla.net/fonts/fira.css'>
+<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+<link href='https://fonts.googleapis.com/css2?family=Average+Sans&family=Goudy+Bookletter+1911&display=swap' rel='stylesheet' />
 <link rel='stylesheet' href='/css/site.css?v=2' type='text/css'/>
-<link rel='stylesheet' href='/css/custom.css' type='text/css'/>
 <link rel='stylesheet' href='/css/syntax-coloring.css' type='text/css'/>")
 
 (defun psachin-website-html-preamble (plist)
@@ -61,43 +58,42 @@
 
   ;; Below content will be added anyways
 "<div class='intro'>
-<img src='/images/about/profile.png' alt='Liwen Knight-Zhang' class='no-border'/>
-<h1>Liwen Knight-Zhang</h1>
-<p>Emacser</p>
+  <img src='/images/about/profile.png' alt='Liwen Knight-Zhang' class='no-border'/>
+  <h1>Liwen Knight-Zhang</h1>
+  <p>Emacser, Coder, Husband & Lifelong Learner</p>
 </div>
 
 <div class='nav'>
-<ul>
-<li><a href='/'>Blog</a>.</li>
-<li><a href='http://gitlab.com/'>GitLab</a>.</li>
-<li><a href='https://www.reddit.com/user/'>Reddit</a>.</li>
-<li><a href='/index.xml'>RSS</a>.</li>
-<li><a href='/about/'>About</a></li>
-</ul>
+  <ul>
+    <li><a href='/'><i class='icon-home-outline'></i> Home</a></li>
+    <!--<li><a href='http://github.com/lwkz'><i class='icon-github'></i> GitHub</a><li>-->
+    <li><a href='/index.xml'><i class='icon-rss-outline'></i> RSS</a><li>
+    <li><a href='/about'><i class='icon-user'></i> About</a></li>
+    <!--<li><a href='https://www.twitter.com'><i class='icon-twitter'></i> Twitter</a></li>-->
+  </ul>
 </div>")
 
 (defvar psachin-website-html-postamble
   "<div class='footer'>
     <p>Copyright © 2011-2020 Liwen Knight-Zhang</p>
-    <p>Adapted from <a href='https://nicolas.petton.fr'>https://nicolas.petton.fr</a></p>
-    <p>Last updated on %C using %c</p>
+    <p>Last updated on %C using %c <i class='icon-emo-thumbsup'></i></p>
 </div>")
 
 (defvar site-attachments
   (regexp-opt '("jpg" "jpeg" "gif" "png" "svg"
+                "css" "eot" "ttf" "woff" "woff2"
                 "ico" "cur" "css" "js" "woff" "html" "pdf"))
   "File types that are published as static files.")
 
 
 (defun psachin/org-sitemap-format-entry (entry style project)
   "Format posts with author and published data in the index page.
-
 ENTRY: file-name
 STYLE:
 PROJECT: `posts in this case."
   (cond ((not (directory-name-p entry))
-         (format "*[[file:%s][%s]]*
-                 #+HTML: <p class='pubdate'>On %s.</p>"
+         (format "[[file:%s][%s]]
+                 #+HTML: <p class='pubdate'>%s</p>"
                  entry
                  (org-publish-find-title entry project)
                  (format-time-string psachin-date-format
@@ -124,7 +120,7 @@ publishing directory.  Returns output file name."
          :exclude ,(regexp-opt '("README.org" "draft"))
          :auto-sitemap t
          :sitemap-filename "index.org"
-         :sitemap-title "Blog Index"
+         :sitemap-title "Articles"
          :sitemap-format-entry psachin/org-sitemap-format-entry
          :sitemap-style list
          :sitemap-sort-files anti-chronologically
@@ -152,8 +148,14 @@ publishing directory.  Returns output file name."
          :html-postamble ,psachin-website-html-postamble)
         ("css"
          :base-directory "./css"
-         :base-extension "css"
+         :base-extension ,site-attachments
          :publishing-directory "./public/css"
+         :publishing-function org-publish-attachment
+         :recursive t)
+        ("font"
+         :base-directory "./font"
+         :base-extension ,site-attachments
+         :publishing-directory "./public/font"
          :publishing-function org-publish-attachment
          :recursive t)
         ("images"
@@ -181,7 +183,7 @@ publishing directory.  Returns output file name."
          :exclude ".*"
          :include ("index.org")
          :table-of-contents nil)
-        ("all" :components ("posts" "about" "css" "images" "assets" "rss"))))
+        ("all" :components ("posts" "about" "css" "font" "images" "assets" "rss"))))
 
 (provide 'publish)
 ;;; publish.el ends here
