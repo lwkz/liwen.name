@@ -1,225 +1,320 @@
+@font-face {
+  font-family: 'fontello';
+  src: url('../font/fontello.eot?60640201');
+  src: url('../font/fontello.eot?60640201#iefix') format('embedded-opentype'),
+  url('../font/fontello.woff2?60640201') format('woff2'),
+  url('../font/fontello.woff?60640201') format('woff'),
+  url('../font/fontello.ttf?60640201') format('truetype'),
+  url('../font/fontello.svg?60640201#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+   @media screen and (-webkit-min-device-pixel-ratio:0) {
+   @font-face {
+   font-family: 'fontello';
+   src: url('../font/fontello.svg?60640201#fontello') format('svg');
+   }
+   }
+ */
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  speak: never;
+  
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+  
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+  
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+  
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+  
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+  
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.icon-home-outline:before { content: '\e800'; } /* '' */
+.icon-rss-outline:before { content: '\e801'; } /* '' */
+.icon-user:before { content: '\e802'; } /* '' */
+.icon-twitter:before { content: '\e803'; } /* '' */
+.icon-emo-happy:before { content: '\e804'; } /* '' */
+.icon-emo-wink:before { content: '\e805'; } /* '' */
+.icon-emo-unhappy:before { content: '\e806'; } /* '' */
+.icon-emo-sleep:before { content: '\e807'; } /* '' */
+.icon-emo-thumbsup:before { content: '\e808'; } /* '' */
+.icon-emo-devil:before { content: '\e809'; } /* '' */
+.icon-emo-surprised:before { content: '\e80a'; } /* '' */
+.icon-emo-tongue:before { content: '\e80b'; } /* '' */
+.icon-emo-coffee:before { content: '\e80c'; } /* '' */
+.icon-emo-sunglasses:before { content: '\e80d'; } /* '' */
+.icon-emo-displeased:before { content: '\e80e'; } /* '' */
+.icon-emo-angry:before { content: '\e80f'; } /* '' */
+.icon-emo-grin:before { content: '\e810'; } /* '' */
+.icon-emo-saint:before { content: '\e811'; } /* '' */
+.icon-emo-cry:before { content: '\e812'; } /* '' */
+.icon-emo-wink2:before { content: '\e813'; } /* '' */
+.icon-emo-shoot:before { content: '\e814'; } /* '' */
+.icon-emo-squint:before { content: '\e815'; } /* '' */
+.icon-emo-laugh:before { content: '\e816'; } /* '' */
+.icon-calendar:before { content: '\e817'; } /* '' */
+.icon-github:before { content: '\f113'; } /* '' */
+
+:root {
+  --primary-colour: #ff00a0;
+  --primary-colour-analogous-1: #b300ff;
+  --primary-colour-analogous-2: #ff0800;
+  --primary-colour-complementary: #00ff5e;
+  --primary-tint-colour: #ffedf8;
+  --secondary-tint-colour: #ffdbf2;
+  --tertiary-tint-colour: #ffc8eb;
+  --primary-text-colour: #666666;
+  --secondary-text-colour: #999999;
+  --primary-text-tint-colour: #cccccc;
+  --primary-meta-colour: #aaaaaa;
+  --primary-heading-colour: #444444;
+  --primary-bg-colour: #ffffff;
+  --secondary-bg-colour: #f9f9f9;
+  --border-bg-rainbow: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #800080) 1;
+}
+
 body {
-  font-family: 'Fira Sans', Helvetica, sans-serif;
+  font-family: 'Average Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   line-height: 1.5;
   font-size: 18px;
-  background: #fff;
-  color: #666;
   margin: 0;
-  border-top: 3px solid #1692cc;
+  background: var(--primary-bg-colour);
+  color: var(--primary-text-colour);
+  border-top: 1px solid var(--primary-colour);
 }
+
 @media (max-width: 799px) {
   body {
     padding: 15px;
     font-size: .95em;
   }
 }
-body h1,
-body h2,
-body h3,
-body h4 {
-  font-weight: normal;
+
+h1, h2, h3, h4, h5, h6, h7, h8 {
+  font-family: 'Goudy Bookletter 1911', 'Times New Roman', Times, Georgia, serif;
+  font-weight: 700;
   margin: 0;
   padding: 0;
-  color: #444;
+  color: var(--primary-heading-colour);
 }
-body h1 b,
-body h2 b,
-body h3 b,
-body h4 b {
-  display: block;
-  line-height: 1;
-  font-size: 150%;
-}
-body h1 img,
-body h2 img,
-body h3 img,
-body h4 img {
-  vertical-align: middle;
-  border: 0 none;
-}
-body h1 {
+h1 {
   font-size: 42px;
   margin-top: 40px;
 }
-body h2 {
+h2 {
   margin-top: 60px;
   position: relative;
   font-size: 32px;
 }
-body h3 {
+h3 {
   font-size: 22px;
   margin-top: 40px;
   font-weight: bold;
 }
-body a {
-  text-decoration: none;
-  color: #1692cc;
+a { text-decoration: none; color: var(--primary-colour); }
+a:hover { text-decoration: underline;}
+
+pre {
 }
-body a:hover {
-  color: #91351c;
-  text-decoration: underline;
+pre.src, code {
+  font-family: 'Source Code Pro', Monaco, 'DejaVu Sans Mono', 'Lucida Console', Courier, monospace;
+  font-size: .85em;
 }
-body pre {
-  background: white;
-}
-body pre.src {
+pre.src {
   overflow-y: auto !important;
-  font-size: 16px;
 }
-body code {
-  background: #eee;
-  border: 1px solid #ccc;
+code {
+  border: 1px solid var(--primary-tint-colour);
   padding: 0px 4px;
-  color: #666;
+  color: var(--primary-text-colour);
   overflow-x: auto;
-  font-size: .9em;
+  border-radius: 5px;
 }
-body li {
+li {
   margin-bottom: 1em;
 }
-body img {
-  border: 1px solid #ccc;
-  height: auto;
+
+img { height: auto; }
+@media (max-width: 799px) {
+  img { max-width: 100%; }
 }
-@media (max-width: 800px) {
-  body img {
-    max-width: 100%;
-  }
+
+figure {
+  margin: 0;
+  text-align: center;
 }
-body img.no-border {
-  border: none;
+
+figcaption {
+  text-align: center;
 }
-body img.rounded-border {
-    border-radius: 20px;
+
+blockquote {
+  background: var(--secondary-bg-colour);
+  border-left: 5px solid var(--primary-text-tint-colour);
+  margin: 1.5em 0;
+  padding: 0.5em 15px;
+  quotes: '\201C''\201D''\2018''\2019';
 }
-body img.black-border {
-    border: 2px solid black;
+blockquote:before {
+  color: var(--primary-text-tint-colour);
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
 }
-body img.spaced-border {
-    border: 1px solid gray;
-    padding: 15px;
+blockquote p {
+  display: inline;
 }
-body .tag {
+
+#text-table-of-contents li {
+  margin-bottom: 0;
+}
+
+.tag {
   background: transparent;
   font-size: 0.6em;
 }
-body .tag span {
-  background: #1692cc;
+.tag span {
+  background: var(--primary-colour-analogous-1);
   color: white;
   padding: 2px 5px;
   border-radius: 4px;
 }
-body .pubdate {
-  color: #aaa;
+.pubdate {
+  color: var(--primary-meta-colour);
   font-size: 14px;
   margin-bottom: 20px;
   margin-top: -16px;
-  text-align: right;
-  border-bottom: 1px solid #e2e2e2;
 }
-body .pubdate p {
+.pubdate p {
   display: inline;
   margin-right: 10px;
 }
 @media (max-width: 800px) {
-  body .pubdate {
+  .pubdate {
     margin-top: 0;
     text-align: left;
   }
 }
-body .nav-blog {
+
+header .subtitle { color: var(--primary-meta-colour); }
+
+.nav-blog {
   text-align: right;
 }
-body .org-info-js_info-navigation {
-  background: #bbb;
+.org-info-js_info-navigation {
+  background: var(--secondary-bg-colour);
 }
 @media (min-width: 800px) {
-  body #content,
-  body #postamble {
+  #content,
+  #postamble {
     margin: 0 auto;
     max-width: 700px !important;
     width: 700px !important;
   }
 }
-body #content {
+#content {
   margin-top: 10px;
 }
-body #postamble {
+#postamble {
   font-size: 0.8em;
-  line-height: 1.8em;
-  margin-top: 50px;
+  line-height: 1.25em;
+  margin-top: 3em;
   text-align: center;
-  color: #aaa;
+  color: var(--primary-meta-colour);
   padding: 15px 0;
-  border-top: 1px solid #e2e2e2;
+  border-top: 1px solid;
+  border-image: var(--border-bg-rainbow);
 }
 
 .footer p {
   text-align: center;
 }
 
-body #postamble a {
-  color: #e9a390;
-}
 @media (min-width: 800px) {
-  body #preamble {
+  #preamble {
     width: 700px;
     margin: 0px auto;
     position: relative;
   }
 }
-body .intro {
-  padding-top: 20px;
-  color: #BBB;
+.intro {
+  color: var(--primary-meta-colour);
   text-align: center;
 }
-body .intro h1 {
+.intro h1 {
   font-size: 42px;
-  font-weight: bold;
   line-height: 1em;
   margin: .3em;
   padding: 0;
 }
-body .intro p {
-  color: #aaa;
+.intro p {
+  color: var(--primary-meta-colour);
   font-size: 14px !important;
   text-align: center;
 }
-body .intro img {
-  border-radius: 100%;
+.intro img {
+  height: 100px;
   width: 100px;
+  border-radius: 50%;
 }
-body .nav {
+.nav {
   text-align: center;
-  margin-top: 30px;
-  border-bottom: 1px solid #e2e2e2;
-  font-size: 12px;
-  text-transform: uppercase;
+  margin-top: 20px;
+  border-bottom: 1px solid;
+  border-image: var(--border-bg-rainbow);
+  font-size: 0.8em;
 }
-body .nav ul {
+.nav ul {
   list-style: none;
   padding: 0;
 }
-body .nav ul li {
-  color: #999;
+.nav ul li {
+  color: var(--secondary-text-colour);
   display: inline-block;
   margin: 0;
 }
-body .nav ul li a {
+.nav ul li a {
   display: inline-block;
   padding-right: 6px;
   border-radius: 0;
   font-weight: normal;
-  color: #6a6a6a;
 }
-body #disqus_thread {
+#disqus_thread {
   margin-top: 40px;
 }
-body .clearfix {
+.clearfix {
   clear: both;
 }
-@media (min-width: 800px) {
-  body .contact {
+@media (min-width: 799px) {
+  .contact {
     -moz-column-count: 2;
     -webkit-column-count: 2;
     -moz-column-gap: 3em;

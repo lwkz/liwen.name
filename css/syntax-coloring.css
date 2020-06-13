@@ -23,26 +23,27 @@
 #postamble p, #preamble p { font-size: 90%; margin: .2em; }
 p.verse { margin-left: 3%; }
 pre {
+  background: white;
+  margin: 1em 0;
   border: 1px solid #ccc;
   box-shadow: 3px 3px 3px #eee;
   padding: 8pt;
-  font-family: monospace;
   overflow: auto;
-  margin: 1.2em;
 }
 pre.src {
   position: relative;
   overflow: visible;
-  padding-top: 1.2em;
 }
 pre.src:before {
   display: none;
   position: absolute;
-  background-color: white;
-  top: -10px;
+  background-color: #FFF4ED;
+  top: -0.3em;
   right: 10px;
-  padding: 3px;
-  border: 1px solid black;
+  padding: 3px 8px;
+  border: 1px solid #FFE9DB;
+  border-radius: 5px;
+  font-size: 0.75em;
 }
 pre.src:hover:before { display: inline;}
 /* Languages per Org manual */
