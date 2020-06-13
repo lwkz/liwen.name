@@ -1,5 +1,5 @@
-#+title: Encryption with EasyPG & Emacs
-#+date: <2012-11-22 Thu>
+#+title: Encrypt in Emacs with EasyPG
+#+date: <2017-03-21 Tue>
 #+keywords: emacs, easypg, gpg, encryption, security
 #+setupfile: ../org-templates/post.org
 
@@ -91,7 +91,7 @@ recipient's public key for encryption.
     you have in your system and the encryption methods your employ. It's best to
     consult relevant documentation for detailed instructions.
 
-** Update <2017-03-21>
+** Updated on <2017-03-21>
    To use Emacs 25+ with GnuPG 2.1.x and above, set the below in your Emacs init file:
    #+begin_src emacs-lisp
      (setq epg-gpg-program "gpg2")
