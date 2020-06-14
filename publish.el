@@ -1,5 +1,5 @@
 ;; publish.el --- Publish org-mode project on Gitlab Pages
-;; Author: Sachin Patil
+;; Author: Sachin Patil, Liwen Knight-Zhang
 
 ;;; Commentary:
 ;; This script will convert the org-mode files in this directory into
