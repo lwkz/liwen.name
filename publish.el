@@ -81,7 +81,8 @@
 (defvar psachin-website-html-postamble
   "<div class='footer'>
     <p>Copyright © 2011-2020 Liwen Knight-Zhang</p>
-    <p>Last updated on %C using %c <i class='icon-emo-thumbsup'></i></p>
+    <p>Last updated on %C</p>
+    <p>Published with %c <i class='icon-emo-thumbsup'></i>
 </div>")
 
 (defvar site-attachments

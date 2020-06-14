@@ -1,19 +1,17 @@
 #+title: About
 #+keywords: about
 
-** Me
-   Since managing to move a picture of Mario from left to right on my Commando
-   64, I have never lost the satisfaction of programming.
+Since managing to move a picture of Mario from left to right on my Commando 64,
+I have never lost the satisfaction of programming.
    
-   #+attr_html: :width 20% :height
-   [[../images/about/super-mario.png]]
-   
-   I moved to the UK and completed my Master’s degree in Computer Science at
-   Durham University, and have worked in the field ever since. Nowadays,
-   although not fully hands-on at work, I still find spare time to tinker with
-   my [[https://www.gnu.org/software/emacs/][Emacs]] setup with a bit of lisp code. I use [[https://orgmode.org/][org-mode]] as the single souce of
-   truth for organising all my notes and agenda. You can say I live in Emacs &
-   Org-mode.
+#+attr_html: :width 20% :height
+[[../images/about/super-mario.png]]
+
+I moved to the UK and completed my Master’s degree in Computer Science at Durham
+University, and have worked in the field ever since. Nowadays, although not
+fully hands-on at work, I still find spare time to tinker with my [[https://www.gnu.org/software/emacs/][Emacs]] setup
+with a bit of lisp code. I use [[https://orgmode.org/][org-mode]] as the single souce of truth for
+organising all my notes and agenda. You can say I live in Emacs & Org-mode.
 
 ** Work
    I work at one of the UK's largest media companies. I am the Head of
@@ -44,9 +42,7 @@
    teaching are equally important. I intent to put more effort in participating
    in public speaking. Here is a talk I gave on Web Performance:
 
-   #+begin_export html
-   <iframe style="display:block; margin: 0 auto;" width="560" height="315" src="https://www.youtube.com/embed/0KTpO39RzJ8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-   #+end_export
+   + [[https://www.youtube.com/watch?v=0KTpO39RzJ8][Web Performance on The Sun]]
 
 ** This Website
    The icon fonts used on this site are obtained from [[http://fontello.com/][Fontello]]. The licensees of
