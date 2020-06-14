@@ -39,14 +39,14 @@ organising all my notes and agenda. You can say I live in Emacs & Org-mode.
 
 ** Talks
    To fulfil my goal to be a humble lifelong learner, I believe that learning &
-   teaching are equally important. I intent to put more effort in participating
+   teaching are equally important. I intend to put more effort in participating
    in public speaking. Here is a talk I gave on Web Performance:
 
-   + [[https://www.youtube.com/watch?v=0KTpO39RzJ8][Web Performance on The Sun]]
+   + [[https://www.youtube.com/watch?v=0KTpO39RzJ8][Web Performance of The Sun]]
 
 ** This Website
-   The icon fonts used on this site are obtained from [[http://fontello.com/][Fontello]]. The licensees of
-   each fonts are listed in [[../font/LICENSE.txt][LICENSE.txt]].
+   The icon fonts used on this site are obtained from [[http://fontello.com/][Fontello]]. The license of
+   each font is listed in [[../font/LICENSE.txt][LICENSE.txt]].
 
    I used psachin's brilliant [[https://gitlab.com/psachin/psachin.gitlab.io/-/tree/blog_template][Publishing org-mode projects on Gitlab Pages]] as a
-   start point to build this website.
+   starting point to build this website.
