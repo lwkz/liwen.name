@@ -1,4 +1,4 @@
 #+author: Liwen Knight-Zhang
 #+keywords: post
-#+options: toc:nil html5-fancy:t
+#+options: toc:nil
 #+html_doctype: xhtml5

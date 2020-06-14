@@ -1,9 +1,56 @@
 #+title: About
 #+keywords: about
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum.
+** Me
+   Since managing to move a picture of Mario from left to right on my Commando
+   64, I have never lost the satisfaction of programming.
+   
+   #+attr_html: :width 20% :height
+   [[../images/about/super-mario.png]]
+   
+   I moved to the UK and completed my Master’s degree in Computer Science at
+   Durham University, and have worked in the field ever since. Nowadays,
+   although not fully hands-on at work, I still find spare time to tinker with
+   my [[https://www.gnu.org/software/emacs/][Emacs]] setup with a bit of lisp code. I use [[https://orgmode.org/][org-mode]] as the single souce of
+   truth for organising all my notes and agenda. You can say I live in Emacs &
+   Org-mode.
+
+** Work
+   I work at one of the UK's largest media companies. I am the Head of
+   Engineering in a team called Product Platforms. I love both technologies and
+   people development. I used to give software craftsmanship coaching sessions
+   to my team members in my previous work.
+
+   #+attr_html: :width 20% :height
+   [[../images/about/xp-planning-and-feedback-loops.png]]
+
+   The opinions expressed on this website are solely my own and not necessarily
+   those of my employer.
+
+** Blog
+   Over the years I have tried and failed to maintain a blog countless
+   times. The idea of writing something useful for others was overwhelming. The
+   only achievement I had was that I once made a popular WordPress theme (for
+   WordPress v0.7), released it and chalked up a Google Page Rank of 5.
+
+   Nowadays I find even [[https://jekyllrb.com/][Jekyll]] has too high a barrier for me to publish
+   anything. Since I use org-mode for organising my notes already, I figured out
+   that I can use org's built-in publishing system to share my random thoughts.
+
+   Covid-19 lockdown helped me to sit down and put this site together.
+
+** Talks
+   To fulfil my goal to be a humble lifelong learner, I believe that learning &
+   teaching are equally important. I intent to put more effort in participating
+   in public speaking. Here is a talk I gave on Web Performance:
+
+   #+begin_export html
+   <iframe style="display:block; margin: 0 auto;" width="560" height="315" src="https://www.youtube.com/embed/0KTpO39RzJ8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+   #+end_export
+
+** This Website
+   The icon fonts used on this site are obtained from [[http://fontello.com/][Fontello]]. The licensees of
+   each fonts are listed in [[../font/LICENSE.txt][LICENSE.txt]].
+
+   I used psachin's brilliant [[https://gitlab.com/psachin/psachin.gitlab.io/-/tree/blog_template][Publishing org-mode projects on Gitlab Pages]] as a
+   start point to build this website.

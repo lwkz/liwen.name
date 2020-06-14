@@ -41,7 +41,6 @@
 
 (defvar psachin-website-html-head
   "<link rel='icon' type='image/x-icon' href='/images/favicon.ico'/>
-<meta name='viewport' content='width=device-width, initial-scale=1'>
 <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
 <link href='https://fonts.googleapis.com/css2?family=Average+Sans&family=Goudy+Bookletter+1911&display=swap' rel='stylesheet' />
 <link rel='stylesheet' href='/css/site.css?v=2' type='text/css'/>
@@ -66,9 +65,9 @@
 <div class='nav'>
   <ul>
     <li><a href='/'><i class='icon-home-outline'></i> Home</a></li>
+    <li><a href='/about'><i class='icon-user'></i> About</a></li>
     <!--<li><a href='http://github.com/lwkz'><i class='icon-github'></i> GitHub</a><li>-->
     <li><a href='/index.xml'><i class='icon-rss-outline'></i> RSS</a><li>
-    <li><a href='/about'><i class='icon-user'></i> About</a></li>
     <!--<li><a href='https://www.twitter.com'><i class='icon-twitter'></i> Twitter</a></li>-->
   </ul>
 </div>")
@@ -81,8 +80,8 @@
 
 (defvar site-attachments
   (regexp-opt '("jpg" "jpeg" "gif" "png" "svg"
-                "css" "eot" "ttf" "woff" "woff2"
-                "ico" "cur" "css" "js" "woff" "html" "pdf"))
+                "eot" "ttf" "woff" "woff2" "ico" "cur"
+                "css" "js" "html" "pdf" "txt"))
   "File types that are published as static files.")
 
 
