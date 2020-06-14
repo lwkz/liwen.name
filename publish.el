@@ -40,7 +40,13 @@
 
 
 (defvar psachin-website-html-head
-  "<link rel='icon' type='image/x-icon' href='/images/favicon.ico'/>
+  "<link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png'>
+<link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png'>
+<link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png'>
+<link rel='manifest' href='/site.webmanifest'>
+<meta name='msapplication-TileColor' content='#da532c'>
+<meta name='theme-color' content='#ffffff'>
+
 <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
 <link href='https://fonts.googleapis.com/css2?family=Average+Sans&family=Goudy+Bookletter+1911&display=swap' rel='stylesheet' />
 <link rel='stylesheet' href='/css/site.css?v=2' type='text/css'/>
@@ -81,7 +87,7 @@
 (defvar site-attachments
   (regexp-opt '("jpg" "jpeg" "gif" "png" "svg"
                 "eot" "ttf" "woff" "woff2" "ico" "cur"
-                "css" "js" "html" "pdf" "txt"))
+                "css" "js" "html" "pdf" "txt" "xml" "webmanifest"))
   "File types that are published as static files.")
 
 
@@ -145,6 +151,12 @@ publishing directory.  Returns output file name."
          :html-head ,psachin-website-html-head
          :html-preamble psachin-website-html-preamble
          :html-postamble ,psachin-website-html-postamble)
+        ("sites-assets"
+         :base-directory "./site-assets"
+         :base-extension ,site-attachments
+         :publishing-directory "./public"
+         :publishing-function org-publish-attachment
+         :recursive t)
         ("css"
          :base-directory "./css"
          :base-extension ,site-attachments
@@ -182,7 +194,7 @@ publishing directory.  Returns output file name."
          :exclude ".*"
          :include ("index.org")
          :table-of-contents nil)
-        ("all" :components ("posts" "about" "css" "font" "images" "assets" "rss"))))
+        ("all" :components ("posts" "about" "css" "font" "sites-assets" "images" "assets" "rss"))))
 
 (provide 'publish)
 ;;; publish.el ends here

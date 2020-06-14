@@ -1,0 +1,6 @@
+* Website assets
+
+  This directory contains assets and configuration files that make the site work
+  correctly across devices.
+
+  I put them here instead of the root directory to avoid clutter.

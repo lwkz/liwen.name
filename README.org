@@ -1,7 +1,7 @@
 #+title: lwkz.github.io
 #+author: Liwen Knight-Zhang <development@liwen.name>
 
-The source code of https://liwen.name.
+The source code of http://liwen.name.
 
 * Building locally
   - Run make from the root directory:
@@ -9,17 +9,17 @@ The source code of https://liwen.name.
       make
     #+END_SRC
 
-  - Use Python's =http.server= module to locally render the pages:
+  - Use Python's =http.server= module to preview the rendered site:
     #+BEGIN_SRC shell -n
       # Python >= 3.7
       python -m http.server --directory=public
     #+END_SRC
 
-  - Open http://localhost:8000/ in the Web browser
+  - Opent [[http://localhost:8000][http://localhost:8000]] in the Web browser
 
 * Credit
-  I used psachin’s brilliant [[https://gitlab.com/psachin/psachin.gitlab.io/-/tree/blog_template][Publishing org-mode projects on Gitlab Pages]] as a
-  start point to put this together.
+  I used psachin’s [[https://gitlab.com/psachin/psachin.gitlab.io/-/tree/blog_template][Publishing org-mode projects on Gitlab Pages]] as a start point
+  to put this together.
   
-  The icon fonts used on this site are obtained from [[http://fontello.com/][Fontello]]. The licensees of
-  each fonts are listed in [[../font/LICENSE.txt][LICENSE.txt]].
+  The icon fonts are obtained from [[http://fontello.com/][Fontello]]. The licensees of each fonts are
+  listed in [[../font/LICENSE.txt][LICENSE.txt]].
