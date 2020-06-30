@@ -4,7 +4,7 @@
 Since managing to move a picture of Mario from left to right on my Commando 64,
 I have never lost the satisfaction of programming.
    
-#+attr_html: :width 20% :height
+#+attr_html: :style width: 20%;
 [[../images/about/super-mario.png]]
 
 I moved to the UK and completed my Master’s degree in Computer Science at Durham
@@ -19,7 +19,7 @@ organising all my notes and agenda. You can say I live in Emacs & Org-mode.
    people development. I used to give software craftsmanship coaching sessions
    to my team members in my previous work.
 
-   #+attr_html: :width 20% :height
+   #+attr_html: :style width: 30%;
    [[../images/about/xp-planning-and-feedback-loops.png]]
 
    The opinions expressed on this website are solely my own and not necessarily

@@ -1,0 +1,414 @@
+#+title: Use mbsync & mu4e for emails in Emacs
+#+date: <2020-06-28 Sun>
+#+keywords: emacs, mu4e, isync
+#+setupfile: ../org-templates/post.org
+#+options: toc:3
+
+** Motivation
+
+Email is a primary communication medium and I wanted my email system to be able
+to:
+
+1. read, archive, delete and draft my emails offline <<offline access>>
+2. store emails as plain text files <<plain text>>
+3. search emails across multiple accounts <<maildir>>
+4. link emails to my todo items or notes directly <<direct link>>
+5. have powerful search options <<powerful search>>
+6. find emails instantly, even with hundreds of thousands emails <<fast search>>
+7. find emails without having to remember folders, tags or categories <<simple search>>
+8. archive, backup and move emails between different accounts and service providers easily <<local maildir>>
+9. do all of above in Emacs <<emails in Emacs>>
+
+If that's something sounds appealing to you too, read on. 
+
+I have six Gmail accounts and one Outlook mailbox, with about 20k messages in
+total. I was frustrated as I couldn't find any email client or webmail that can
+do all of what I wanted.
+
+I embarked on a journey to find the best setup that works for me. After trying
+many tools, including [[https://www.thunderbird.net/en-GB/][Thunderbird]], [[https://airmailapp.com/][Airmail]], [[https://www.gnu.org/software/emacs/manual/html_node/gnus/][Gnus]] and [[https://notmuchmail.org/][Notmuch]] + [[http://www.offlineimap.org/][OfflineIMAP]],
+eventually I settled down with [[https://www.djcbsoftware.nl/code/mu/][mu(mu4e)]] & [[http://isync.sourceforge.net/mbsync.html][mbsync]]. I have been using this setup
+for a couple of years and I am fairly happy with it.
+
+I wanted to write down how I configured my setup in detail, where and why I had
+to tweak things, to serve as a reminder to myself and hope to help anyone who
+reads this avoid the same problems I had to go through.
+
+** Configure your Gmail account
+   Thanks to Gmail's quirky [[https://tools.ietf.org/html/rfc3501][IMAP]] implementation, I had to go through a lot of
+   trial and error to make Gmail play nicely with open source tools. More
+   importantly, to work for my own workflow.
+   
+   Before we dive into the setup and start synchronising thousands of emails,
+   let's go through some of the changes I've made and the reasons behind the
+   tweaks.
+
+*** App Password
+    If you've enabled 2-step verification for Google sign in, you'll need to
+    generate an App password for mbsync. If "enable less secure applications"
+    option is disabled by your domain admin or you don't like the sound of "less
+    secure", you can use something like [[https://github.com/google/gmail-oauth2-tools/blob/master/python/oauth2.py][this]] to get OAuth access token.
+
+    Head to Google Account → Security → Signing in to Google → App passwords:
+
+    [[../images/posts/mu4e/apppassword.png]]
+
+    Once you have the password, put it in your =~/.authinfo.gpg=:
+
+    #+begin_src conf
+      machine imap.gmail.com login hello@liwen.name port 993 password rtmkwnaqtdx39sido3sld
+      machine smtp.gmail.com login hello@liwen.name port 587 password rtmkwnaqtdx39sido3sld
+    #+end_src
+
+
+    Head to your Gmail settings → Forwarding and POP/IMAP, and turn
+    'Auto-Expunge' off:
+    
+    [[../images/posts/mu4e/gmail-auto-expunge.png]]
+
+    When 'Auto-Expunge' is on, Gmail will archive emails that are marked for
+    deletion instead of deleting them. When I say delete, I would like my emails
+    to be really deleted. Since my primary method of finding emails is through
+    search and I would prefer not seeing deleted messages appearing in the
+    serach results.
+
+*** Tags
+    Tagging has become a key part of many people's workflow. Being able to tag a
+    single email with multiple tags allow you to add custom metadata to emails
+    for easy filtering. However, custom tags are not part of the IMAP
+    standards. Different email providers and email clients implemented tagging
+    differently over the years. Many tools map tags with folders (Maildir
+    mailboxes). This causes another potential issue - message
+    duplication. E.g. if a message is tagged with 'Family', 'Holiday' and
+    'Finance' in Gmail, it will be synchronised into =/Family=, =/Holiday= and
+    =/Finance= folders on you local computer. When you do a search, all three
+    messages will appear in the search result.  Depending on your workflow this
+    may or may not be an issue. Personally I prefer /searching/ over
+    /organising/. If you can get what you need by asking a question (search),
+    why would you need to remember where the infomation is stored in the first
+    place (organise)? Personally I never can remember what tags to use when I
+    want to know 'how many sandwiches I need to bring to the picnic next week
+    with Joe at Greenwich Park', instead I search ~sandwich picnic greenwich
+    joe~.
+
+    If you really want both, you can still do it with some [[https://www.djcbsoftware.nl/code/mu/mu4e/Adding-a-new-kind-of-mark.html][Emacs code]].
+
+    Time to delete all the unnecessary tags in Gmail and move on.
+
+** The three parts of the setup
+   There are three main parts in this setup: [[#4AC3952B-5422-43D2-9B4D-F366B1579D06][mbsync]], [[#1C16BFB5-4C52-4670-8F0E-59FF56BDE05F][mu]] and [[#4E0C0ECE-0A80-4B9E-8D32-EBBCAC54BFFA][mu4e]]. Using three
+   pieces of software just for emails? You may think this is totally
+   overkill. Let me explain why this is actually the best approach. As Unix
+   philosophy says - 'specific pieces of software should be built to do one
+   thing and do that one thing well'.
+
+*** *mbsync* - synchronise [[https://en.wikipedia.org/wiki/Maildir#:~:text=From%20Wikipedia%2C%20the%20free%20encyclopedia,are%20added%2C%20moved%20and%20deleted.][Maildir]] mailboxes using IMAP4
+    :PROPERTIES:
+    :ID:       4AC3952B-5422-43D2-9B4D-F366B1579D06
+    :END:
+    mbsync creates a bunch of folders on your hard drive which maps to the
+    'folders' or 'tags' in your email accounts. It puts each individual email as
+    a plain text file in the respective folders and handles the synchronisation
+    between your local copies and the emails stored on the server.
+
+    #+begin_quote
+    The Maildir e-mail format is a common way of storing email messages in which
+    each message is stored in a separate file with a unique name, and each mail
+    folder is a file system directory. The local file system handles file
+    locking as messages are added, moved and deleted. A major design goal of
+    Maildir is to eliminate the need for program code to handle file locking and
+    unlocking. --- [[https://en.wikipedia.org/wiki/Maildir#:~:text=From%20Wikipedia%2C%20the%20free%20encyclopedia,are%20added%2C%20moved%20and%20deleted.][Wikipedia]]
+    #+end_quote
+
+    This satisfies [[offline access]], [[plain text]] & [[maildir]], and it makes [[direct
+    link]] possible.
+
+    mbsync can be installed via ~homebrew~ on Mac OS:
+    #+begin_src shell
+      # 'isync' is the project name. 'mbsync' is the current executable name. The
+      # unusal mismatch is due to historical breaking changes.
+      brew install isync
+    #+end_src
+
+    mbsync requires a configuration file to run. Read more about all the
+    configuration options [[http://isync.sourceforge.net/mbsync.html][here]].
+
+    Here is how my =~/.mbsyncrc= looks like:
+    #+begin_src conf
+      #
+      # Sample configuration for Gmail account
+      # Please refer to http://isync.sourceforge.net/mbsync.html for more details
+      #
+
+      #
+      # IMAP4 Account name, starting a new email account configuration
+      IMAPAccount my_account
+      Host imap.gmail.com
+      User example@gmail.com
+      # Specify a shell command to obtain the password
+      PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | awk '/machine imap.gmail.com login example@gmail.com/ {print $NF}'"
+      SSLType IMAPS
+      SSLVersion TLSv1.2
+      AuthMechs LOGIN
+      # On MacOS, I had to install openssl from homebrew for the certificate
+      CertificateFile /usr/local/etc/openssl/cert.pem
+      # On Linux, you may find the certificate here
+      # CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+      #
+      # Define the Maildir
+      MaildirStore myaccount-local
+      # Fatten nested Gmail labels. E.g /[Gmail]/Trash becomes /[Gmail].Trash
+      # This also renders 'SubFolders' setting irrelevant
+      Flatten .
+      # The trailing "/" is important.  Make sure both ~/Mail &
+      # ~/mail/example@gmail.com directories exist, otherwise mbsync will complain.
+      Path ~/Mail/example@gmail.com/
+      Inbox ~/Mail/example@gmail.com/Inbox
+
+      # 
+      # Define the IMAP4
+      IMAPStore myaccount-remote
+      Account myaccount
+
+      #
+      # Define the Channel
+      Channel mychannel
+      Master :myaccount-remote:
+      Slave :myaccount-local:
+      # Here I synchronise everything apart from 'Starred' and 'Important' folders,
+      # these two labels (Gmail's term) have no use to my workflow
+      Patterns Inbox * ![Gmail].Starred ![Gmail].Important
+
+      # Automatically create missing mailboxes, both locally and on the server
+      Create Both
+      # *CAUTION*: Please read http://isync.sourceforge.net/mbsync.html#RECOMMENDATIONS for more details
+      # I prefer mbsync to delete the email completely on the server when I delete it locally and do a sync
+      Expunge Both
+      # Save the synchronisation state files in the relevant directory
+      SyncState *
+
+      #
+      # Sample configuration for Outlook account
+      # Please refer to http://isync.sourceforge.net/mbsync.html for more details
+      #
+
+      IMAPAccount outlook
+      Host outlook.office365.com
+      User example@hotmail.com
+      PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | awk '/machine smtp.office365.com login example@hotmail.com/ {print $NF}'"
+      SSLType IMAPS
+      SSLVersion TLSv1.2
+      AuthMechs LOGIN
+      CertificateFile /usr/local/etc/openssl/cert.pem
+
+      MaildirStore outlook-local
+      Flatten .
+      Path ~/Mail/example@hotmail.com/
+
+      IMAPStore outlook-remote
+      Account outlook
+
+      Channel outlook
+      Master :outlook-remote:
+      Slave :outlook-local:
+      Patterns * !Junk
+
+      Create Both
+      Expunge Both
+      SyncState *
+
+      #
+      # Synchronise everything 
+      #
+
+      Sync All
+    #+end_src
+    
+
+    Let's try our configuration:
+    #+begin_src shell
+      mbsync --all
+    #+end_src
+
+    You should see something like this:
+    #+begin_src shell
+      C: 6/7  B: 47/58  M: +0/0 *0/0 #0/0  S: +3/3 *0/0 #0/0
+      Maildir notice: no UIDVALIDITY, creating new.
+      C: 6/7  B: 48/58  M: +0/0 *0/0 #0/0  S: +29/29 *0/0 #0/0
+      Maildir notice: no UIDVALIDITY, creating new.
+      C: 6/7  B: 49/58  M: +0/0 *0/0 #0/0  S: +43/43 *0/0 #0/0
+      Maildir notice: no UIDVALIDITY, creating new.
+      C: 6/7  B: 50/58  M: +0/0 *0/0 #0/0  S: +43/43 *0/0 #0/0
+      Maildir notice: no UIDVALIDITY, creating new.
+      C: 6/7  B: 51/58  M: +0/0 *0/0 #0/0  S: +49/49 *0/0 #0/0
+      Maildir notice: no UIDVALIDITY, creating new.
+      C: 6/7  B: 52/58  M: +0/0 *0/0 #0/0  S: +92/92 *0/0 #0/0
+      Maildir notice: no UIDVALIDITY, creating new.
+      C: 6/7  B: 53/58  M: +0/0 *0/0 #0/0  S: +92/92 *0/0 #0/0
+      Maildir notice: no UIDVALIDITY, creating new.
+      C: 6/7  B: 54/58  M: +0/0 *0/0 #0/0  S: +92/92 *0/0 #0/0
+      Maildir notice: no UIDVALIDITY, creating new.
+      C: 6/7  B: 55/58  M: +0/0 *0/0 #0/0  S: +92/92 *0/0 #0/0
+      Maildir notice: no UIDVALIDITY, creating new.
+      C: 6/7  B: 56/58  M: +0/0 *0/0 #0/0  S: +92/92 *0/0 #0/0
+      Maildir notice: no UIDVALIDITY, creating new.
+      C: 6/7  B: 57/58  M: +0/0 *0/0 #0/0  S: +92/92 *0/0 #0/0
+      Maildir notice: no UIDVALIDITY, creating new.
+      C: 7/7  B: 58/58  M: +0/0 *0/0 #0/0  S: +92/92 *0/0 #0/0
+    #+end_src
+
+*** *mu* - a search engineer for Maildir emails
+    :PROPERTIES:
+    :ID:       1C16BFB5-4C52-4670-8F0E-59FF56BDE05F
+    :END:
+    [[https://www.djcbsoftware.nl/code/mu/][mu]] can be installed with ~hombrew~ on Mac OS:
+    #+begin_src shell
+      brew install mu
+    #+end_src
+
+    Make sure you read the mu man page:
+    #+begin_src shell
+    man mu
+    #+end_src
+
+    First let's run ~mu index~ to build the local database/index of all our messages.
+
+    To find the order confirmation for my West Digital drive from Amazon:
+    #+begin_src shell
+      mu find amazon west digital
+
+      Fri 11 Oct 07:34:55 2019 "Amazon.co.uk" <auto-confirm@amazon.co.uk> Your Amazon.co.uk order of "Happy Hacking Keyboard..." and 1 more item(s)
+    #+end_src
+
+    The search result is instant.
+
+    =mu= fulfils [[powerful search]], [[fast search]] and [[simple search]].
+    
+*** *mu4e* - an email client for Emacs, built on top of mu
+    :PROPERTIES:
+    :ID:       4E0C0ECE-0A80-4B9E-8D32-EBBCAC54BFFA
+    :END:
+    This is my ~mu4e~ configuration:
+    #+begin_src emacs-lisp
+      (require 'mu4e)
+      (require 'smtpmail)
+      (require 'org-mu4e)
+
+      ;; Mu4e general settings
+      (setq mail-user-agent 'mu4e-user-agent ;; Use mu4e as default Emacs mail agent
+            mu4e-maildir "~/Mail"
+
+            ;; Use mbsync for mail sync
+            mu4e-get-mail-command "mbsync -a"
+
+            ;; Don't save message to Sent Messages, Gmail/IMAP takes care of this
+            ;; Override in context switching for other type of mailboxes
+            mu4e-sent-messages-behavior 'delete
+            message-kill-buffer-on-exit t
+
+            ;; This fixes the error 'mbsync error: UID is x beyond highest assigned UID x'
+            mu4e-change-filenames-when-moving t
+
+            ;; Eye candies & attachment handling
+            mu4e-view-show-images t
+            mu4e-use-fancy-chars t
+            mu4e-attachment-dir "~/Downloads"
+
+            ;; Store link to message if in header view, not to header query
+            org-mu4e-link-query-in-headers-mode nil
+
+            ;; This helps when using a dark theme (shr)
+            shr-color-visible-luminance-min 80
+
+            ;; Citation format
+            message-citation-line-format "On %a, %b %d %Y, %N wrote:"
+            message-citation-line-function 'message-insert-formatted-citation-line
+
+            ;; Always use 587 for sending emails
+            message-send-mail-function 'smtpmail-send-it
+            starttls-use-gnutls t
+            smtpmail-smtp-service 587
+
+            ;; Use 'helm' to for mailbox selection completion
+            mu4e-completing-read-function 'completing-read
+
+            ;; Context switch policy
+            mu4e-context-policy 'ask
+            mu4e-compose-context-policy nil)
+
+      ;; Add option to view html message in a browser
+      ;; `aV` in view to activate
+      (add-to-list 'mu4e-view-actions
+                   '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+
+      ;; Mu4e contexts 
+
+      ;; This will ensure the right 'sent from' address and email sign off etc. be
+      ;; picked up when replying to emails.
+      (setq mu4e-contexts
+            `(
+              ,(make-mu4e-context
+                :name "development"
+                :enter-func (lambda () (mu4e-message "Entering Dev account context"))
+                :leave-func (lambda () (mu4e-message "Leaving De account context"))
+                ;; We match based on the contact-fields of the message
+                :match-func (lambda (msg)
+                              (when msg
+                                (mu4e-message-contact-field-matches msg :to "nospam@example.com")))
+                :vars '((user-mail-address . "nospam@example.com")
+                        (user-full-name . "Liwen Knight-Zhang")
+                        (mu4e-drafts-folder . "/nospam@example.com/[Gmail].Drafts")
+                        (mu4e-sent-folder . "/nospam@example.com/[Gmail].Sent Mail")
+                        (mu4e-trash-folder . "/nospam@example.com/[Gmail].Trash")
+                        (smtpmail-smtp-server . "smtp.gmail.com")
+                        (smtpmail-smtp-user . "nospam@example.com")
+                        (smtpmail-starttls-credentials . '(("smtp.gmail.com" 587 nil nil)))
+                        (smtpmail-auth-credentials . '(("smtp.gmail.com" 587 "nospam@example.com" nil)))
+                        (smtpmail-default-smtp-server . "smtp.gmail.com")))
+
+              ,(make-mu4e-context
+                :name "newsletters"
+                :enter-func (lambda () (mu4e-message "Entering Newsletters context"))
+                :leave-func (lambda () (mu4e-message "Leaving Newsletters context"))
+                :match-func (lambda (msg)
+                              (when msg
+                                (mu4e-message-contact-field-matches msg :to "newsletter@example.com")))
+                :vars '((user-mail-address . "newsletter@example.com")
+                        (user-full-name . "Liwen Knight-Zhang")
+                        (mu4e-compose-signature . (concat "Liwen Knight-Zhang | +44 (0)7894 222 323\n"))
+                        (mu4e-drafts-folder . "/newsletter@example.com/[Google Mail].Drafts")
+                        (mu4e-sent-folder . "/newsletter@example.com/[Google Mail].Sent Mail")
+                        (mu4e-trash-folder . "/newsletter@example.com/[Google Mail].Bin")
+                        (smtpmail-smtp-server . "smtp.gmail.com")
+                        (smtpmail-smtp-user . "newsletter@example.com")
+                        (smtpmail-starttls-credentials . '(("smtp.gmail.com" 587 nil nil)))
+                        (smtpmail-auth-credentials . '(("smtp.gmail.com" 587 "newsletter@example.com" nil)))))
+
+      ;; Use imagemagick, if available
+      (when (fboundp 'imagemagick-register-types)
+        (imagemagick-register-types))
+
+      ;; Emulate shr key bindings
+      (add-hook 'mu4e-view-mode-hook
+        (lambda()
+          ;; try to emulate some of the eww key-bindings
+          (local-set-key (kbd "<tab>") 'shr-next-link)
+          (local-set-key (kbd "<backtab>") 'shr-previous-link)))
+
+
+      (provide 'lwkz-mu4e)
+    #+end_src
+    
+** The Results
+   This is what the final result looks like:
+
+   [[../images/posts/mu4e/mu4e-dashboard.png]]
+
+   [[../images/posts/mu4e/mu4e-message-view.png]]
+
+   [[../images/posts/mu4e/mu4e-jump-mailbox.png]]
+
+   Don't forget to read through the [[https://www.djcbsoftware.nl/code/mu/mu4e/index.html#SEC_Contents][user manual]], check out the [[https://www.youtube.com/results?search_query=mu4e][YouTube videos]] and have fun!
+
+   Finally I've conquered [[local maildir]] and [[emails in Emacs]].
