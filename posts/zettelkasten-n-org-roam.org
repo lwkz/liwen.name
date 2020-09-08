@@ -1,0 +1,170 @@
+#+title: Zettelkasten & Org-Roam
+#+date: <2020-07-24 Fri>
+#+keywords: Emacs, Zettelkasten, Learning
+# #+setupfile: ../org-templates/post.org
+#+options: toc:2
+
+
+** Why Taking Notes At All
+   I started taking notes when I was in elementary school. I am absolutely
+   convinced that it is a good habit in learning new subjects.
+  
+   The action of writing things down involves multiple senses working together
+   to create stronger memory.
+   
+   Taking notes in your own words forces you to think deeply about the ideas
+   beyond the passages. To truly understand an idea is not the same as to merely
+   comprehend the written text itself. The 'translation' process is the essence
+   of note-taking. It integrates the newly-learned idea with your existing
+   knowledge network. The benefit of linking your knowledge is more like compound
+   interests instead of linear addition. On the other hand, copying text word by
+   word doesn't automatically make you understand the ideas.
+   
+   Taking notes in meetings and conversations help us concentrate and avoid
+   daydreaming, this is particularly useful in the age of working remotely with
+   back-to-back Zoom calls.
+   
+   Notes crystallise our thoughts in the precise moment when they emerge. Any
+   form of coming-back-later is a waste of time. Repetition doesn't guarantee
+   better understanding of the ideas because [[https://en.wikipedia.org/wiki/Confirmation_bias#:~:text=Confirmation%20bias%20is%20the%20tendency,evidence%2Dbased%20decision%2Dmaking.][our memory is very selective]]. The
+   action of highlighting-for-later is the same as putting things on your
+   back-burner. It's better to deal with them now or discard them completely.
+   Wasting mental energy to manage more back-burners is counterproductive. Our
+   short-term memory and focus are all limited, overloading them will only cause
+   us stress.
+   
+   Taking notes empties our short-term memory. This means we can use our main
+   focus to think about the order, the relationship and the clarity between the
+   ideas we are trying to make sense of. Writing down thoughts doesn't mean we
+   are going to forget about what we have learned. The action of linking the
+   ideas strengthens our understanding. The idea of freeing out short-term
+   memory is also used in David Allen's book /Getting Things Done/.
+
+   However, I always felt I am not taking notes the right way, or perhaps I just
+   have really bad memroy. There are times I couldn't remember much about the
+   books I've spent days reading about a couple of months ago. The volumes of
+   notebooks on my bookshelf often felt foreign to me, as if they were from
+   somebody else.
+
+   It all changed when I learned about Zettlekasten.
+
+** What is Zettelkasten
+   Zettelkasten (German: "slip-box") is a note taking method for knowledge
+   management and writing. It is what made Niklas Luhmann, a self-made public
+   servant to sociologist professor who wrote 58 books and over 400 papers
+   during his lifetime - with more published based on his manuscripts after his
+   death, a prolific scholar. Zettelkasten seems to have gained popularity in
+   the past few years, especially with the popular not-taking application [[https://roamresearch.com/][Roam
+   Research]].
+   
+   #+begin_quote
+   As a result of extensive work with this technique a kind of secondary memory
+   will arise, an alter ego with who we can constantly communicate. It proves to
+   be similar to our own memory in that it does not have a thoroughly
+   constructed order of its entirety, not hierarchy, and most certainly no
+   linear structure like a book. Just because of this, it gets its own life,
+   independent of its author.
+   
+   --- Niklas Luhmann
+   #+end_quote
+   
+   The idea of communicating with your second brain is very powerful. It's like
+   you have a Google with all your own ideas and writings. I find it's
+   particularly interesting as it resonates with my idea of 'searching over
+   organising'. I believe we should be able to have dialogues with our brain and
+   notebooks to ask questions.
+   
+   The method itself is very simple to practice. You use small index cards for
+   note taking. Each card ("Zettel" in German) has an ID, a set of contexts
+   (tags) and references to other cards. All the cards are stored in a
+   slip-box. You then create indexes with key terms of important notes as entry
+   points for querying your knowledge (the second brain). Luhman also has a
+   slip-box dedicated for bibliography.
+
+   The [[https://www.youtube.com/watch?v=c5Tst3-zcWI&ab_channel=Zettlr][Zettelkasten Manifesto]] explains the concept very well.
+
+** Key Principles of Zettelkasten
+   In order to truly realise the effectiveness of the Zettelkasten method, there
+   are few key principles (or at least the ideas behind them) need to be
+   followed religiously.
+
+   + Each card holds a single idea - an *atomic concept* that can be understood
+     by itself.  This makes each card useful in more than one context and it
+     increases the surface area for enquiry.
+    
+   + Use specific and contextual tags, avoid categories. 'Finance' or 'Holiday'
+     are not good tags in Zettelkasten. In what context would you want to find
+     information about 'Finance'? It's too wide. A better version would be
+     'Money Saving Tips' or 'Places I Want to Visit in Africa'. When you tag the
+     notes, don't automatically link them to the most obvious and most commonly
+     used tags. Think hard about in what contexts this note may be useful. This
+     deliberate practice of linking is the essence of Zettelkasten. The existing
+     keywords are warnings, they are not cues.
+    
+   + Build the links among cards through references. The practice of
+     deliberately building links helps you connect ideas. Building links from
+     bottom-up means you have to constantly update your links as you gain new
+     knowledge and insights.
+    
+** How to Take Smart Notes
+   Apart from reading articles from [[https://zettelkasten.de/][zettelkasten.de]], I've also read the book [[https://www.amazon.co.uk/How-Take-Smart-Notes-Nonfiction-ebook/dp/B06WVYW33Y][How
+   to Take Smart Notes]] from Sönke Ahrens. There are plenty of resources on the
+   Internet about Zettelkasten but none explains the idea as in depth as Ahrens'
+   book.
+
+   The core idea of the book is that there are two parts in note-taking. The
+   first one is to write a summary of the main ideas in your own words. The
+   second part is to create links between the new ideas and the existing
+   concepts in your slip-box. They are equally important.
+
+   If you want to give the book a try, I recommend at least try Zettelkasten at
+   the same time while reading the book. I learnt about slip-boxes on the
+   Internet, bought the book and started to use the Zettelkasten method to read
+   this very book about Zettelkasten. I kept improving my Zettelkasten note
+   taking techniques as I went through the book. There were many aha moments
+   which I probably would not be able to get from reading the book for the first
+   time if I didn't practice this technique at all.
+
+   The book categorised notes into a few types. Below is my own interpretation
+   of how Zettels should be organised.
+   
+** Five Types of Notes
+   + Fleeting notes :: Your scrawls on serviettes, brown bags, or coffee shop
+     receipts. They are random ideas you jolted down while you were reading,
+     waiting in the queue or talking with a friend. Make sure you process them
+     within a day or two while the memory is still fresh. You can bin these
+     after you've turned them into permanent notes.
+   
+  + Permanent notes :: Notes that represent atomic ideas which can be understood
+    in their own contexts. I occasionally create notes only to connect related
+    ideas when they are too big to fit into one zettel. The title of the Zettel
+    should be descriptive. The first sentence or paragraph should be the summary
+    of the idea.
+   
+  + Literature notes :: Summarise the content of a book, publication or blog
+    post and give the citation, in the format of "on page X of Y, it says Z"You
+    can keep a separate bibliography slip-box with tools such as [[https://www.zotero.org/][Zetora]] or
+    [[https://github.com/jkitchin/org-ref][org-ref]].
+   
+  + Index notes :: Index notes are the entry points to the universe inside your
+    slip-box. Each index should link as few notes as possible (Luhmann links
+    maximum three). Index notes are not tables of contents which have links to
+    everything in the slip-box. The key idea is to use the key links to discover
+    more notes by traversing through the network.  If you use a digital
+    Zettelkasten system this type of notes may not be necessary - back-links can
+    be discovered by the software easily
+   
+  + Project notes :: Notes that serve as 'folders' for specific projects. You
+    can archive them or bin them once the projects are done. You draw ideas
+    from your permanent notes but you don't change them for the projects - keep
+    the modifications for the project specific context inside the project
+    notes.
+    
+** Org-Roam
+   As a dedicated Emacser, the first thought in my mind was that I have to
+   implement the idea with Emacs. Fortunately you have the wonderful
+   [[https://github.com/org-roam/org-roam][Org-Roam]]. It's straightforward to [[https://blog.jethro.dev/posts/how_to_take_smart_notes_org/][get started]].
+
+
+This article itself is a result of my Zettelkasten with Org-Roam. This wonderful
+[[https://www.youtube.com/watch?v=RvWic15iXjk&ab_channel=NatEliason][video]] taught me how to outline an article with Zettels in 20 minutes.

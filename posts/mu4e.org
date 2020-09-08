@@ -77,7 +77,7 @@ reads this avoid the same problems I had to go through.
     single email with multiple tags allow you to add custom metadata to emails
     for easy filtering. However, custom tags are not part of the IMAP
     standards. Different email providers and email clients implemented tagging
-    differently over the years. Many tools map tags with folders (Maildir
+    differently over the years. Many tools map tags to folders (Maildir
     mailboxes). This causes another potential issue - message
     duplication. E.g. if a message is tagged with 'Family', 'Holiday' and
     'Finance' in Gmail, it will be synchronised into =/Family=, =/Holiday= and
@@ -205,6 +205,7 @@ reads this avoid the same problems I had to go through.
       MaildirStore outlook-local
       Flatten .
       Path ~/Mail/example@hotmail.com/
+      Inbox ~/Mail/liwen.zhang@hotmail.com/Inbox
 
       IMAPStore outlook-remote
       Account outlook
@@ -233,29 +234,7 @@ reads this avoid the same problems I had to go through.
 
     You should see something like this:
     #+begin_src shell
-      C: 6/7  B: 47/58  M: +0/0 *0/0 #0/0  S: +3/3 *0/0 #0/0
-      Maildir notice: no UIDVALIDITY, creating new.
-      C: 6/7  B: 48/58  M: +0/0 *0/0 #0/0  S: +29/29 *0/0 #0/0
-      Maildir notice: no UIDVALIDITY, creating new.
-      C: 6/7  B: 49/58  M: +0/0 *0/0 #0/0  S: +43/43 *0/0 #0/0
-      Maildir notice: no UIDVALIDITY, creating new.
-      C: 6/7  B: 50/58  M: +0/0 *0/0 #0/0  S: +43/43 *0/0 #0/0
-      Maildir notice: no UIDVALIDITY, creating new.
-      C: 6/7  B: 51/58  M: +0/0 *0/0 #0/0  S: +49/49 *0/0 #0/0
-      Maildir notice: no UIDVALIDITY, creating new.
-      C: 6/7  B: 52/58  M: +0/0 *0/0 #0/0  S: +92/92 *0/0 #0/0
-      Maildir notice: no UIDVALIDITY, creating new.
-      C: 6/7  B: 53/58  M: +0/0 *0/0 #0/0  S: +92/92 *0/0 #0/0
-      Maildir notice: no UIDVALIDITY, creating new.
-      C: 6/7  B: 54/58  M: +0/0 *0/0 #0/0  S: +92/92 *0/0 #0/0
-      Maildir notice: no UIDVALIDITY, creating new.
-      C: 6/7  B: 55/58  M: +0/0 *0/0 #0/0  S: +92/92 *0/0 #0/0
-      Maildir notice: no UIDVALIDITY, creating new.
-      C: 6/7  B: 56/58  M: +0/0 *0/0 #0/0  S: +92/92 *0/0 #0/0
-      Maildir notice: no UIDVALIDITY, creating new.
-      C: 6/7  B: 57/58  M: +0/0 *0/0 #0/0  S: +92/92 *0/0 #0/0
-      Maildir notice: no UIDVALIDITY, creating new.
-      C: 7/7  B: 58/58  M: +0/0 *0/0 #0/0  S: +92/92 *0/0 #0/0
+      C: 7/7  B: 58/58  M: +0/0 *0/0 #0/0  S: +0/0 *0/0 #0/0
     #+end_src
 
 *** *mu* - a search engineer for Maildir emails
